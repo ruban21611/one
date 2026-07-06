@@ -1,10 +1,12 @@
 {
-  "name": "Job Application Assistant",
-  "short_name": "JobApp",
+  "name": "My Google AI Studio App",
+  "short_name": "AI Studio",
+  "description": "My PWA Application",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#2563eb",
+  "theme_color": "#4285F4",
   "orientation": "portrait",
   "icons": [
     {
