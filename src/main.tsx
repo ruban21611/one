@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')!).render(
 
 // Register Service Worker
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
+  window.addEventListener('beforeinstallprompt', () => {
     navigator.serviceWorker
       .register('/service-worker.js')
       .then(() => console.log('PWA Ready'))
