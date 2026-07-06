@@ -1,13 +1,177 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <title>My Google AI Studio App</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      overflow:hidden;
+      background:#f5f5f5;
+    }
+
+    /* Overlay */
+    #installOverlay{
+      position:fixed;
+      inset:0;
+      background:linear-gradient(135deg,#4285F4,#34A853);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      z-index:9999;
+      transition:all .8s ease;
+    }
+
+    .overlay-card{
+      width:340px;
+      background:#fff;
+      border-radius:20px;
+      padding:35px;
+      text-align:center;
+      box-shadow:0 15px 40px rgba(0,0,0,.25);
+    }
+
+    .overlay-card h1{
+      font-size:28px;
+      color:#222;
+      margin-bottom:15px;
+    }
+
+    .overlay-card p{
+      color:#666;
+      line-height:1.6;
+      margin-bottom:25px;
+    }
+
+    #installBtn{
+      border:none;
+      background:#4285F4;
+      color:white;
+      font-size:18px;
+      padding:14px 35px;
+      border-radius:50px;
+      cursor:pointer;
+      transition:.3s;
+    }
+
+    #installBtn:hover{
+      transform:scale(1.05);
+      background:#2d6cdf;
+    }
+
+    #installBtn:disabled{
+      opacity:.5;
+      cursor:not-allowed;
+    }
+
+    /* Fade Animation */
+    .hideOverlay{
+      opacity:0;
+      transform:translateY(-100%);
+      pointer-events:none;
+    }
+
+    /* Hide React until overlay disappears */
+    #root{
+      visibility:hidden;
+    }
+
+    #root.show{
+      visibility:visible;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="installOverlay">
+  <div class="overlay-card">
+
+    <h1>📱 Install App</h1>
+
+    <p>
+      Install this application for a better experience.
+    </p>
+
+    <button id="installBtn" disabled>
+      Install Now
+    </button>
+
+  </div>
+</div>
+
+<div id="root"></div>
+
+<script>
+let deferredPrompt;
+
+const overlay=document.getElementById("installOverlay");
+const installBtn=document.getElementById("installBtn");
+const root=document.getElementById("root");
+
+// If already installed
+if(window.matchMedia('(display-mode: standalone)').matches){
+    overlay.classList.add("hideOverlay");
+    root.classList.add("show");
+    document.body.style.overflow="auto";
+}
+
+// Catch install event
+window.addEventListener("beforeinstallprompt",(e)=>{
+    e.preventDefault();
+
+    deferredPrompt=e;
+
+    installBtn.disabled=false;
+});
+
+// Install button
+installBtn.addEventListener("click",async()=>{
+
+    if(!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+
+    const choice=await deferredPrompt.userChoice;
+
+    if(choice.outcome==="accepted"){
+
+        overlay.classList.add("hideOverlay");
+
+        setTimeout(()=>{
+            root.classList.add("show");
+            document.body.style.overflow="auto";
+        },800);
+
+    }
+
+    deferredPrompt=null;
+
+});
+
+// After app installed
+window.addEventListener("appinstalled",()=>{
+
+    overlay.classList.add("hideOverlay");
+
+    setTimeout(()=>{
+        root.classList.add("show");
+        document.body.style.overflow="auto";
+    },800);
+
+});
+</script>
+
+<script type="module" src="/src/main.tsx"></script>
+
+</body>
+</html>
