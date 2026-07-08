@@ -7,7 +7,7 @@
   "theme_color": "#4285F4",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "job-icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
