@@ -5,6 +5,7 @@ import ExploreJobs from './components/ExploreJobs';
 import JobInformation from './components/JobInformation';
 import Requesting from './components/Requesting';
 import Notifications from './components/Notifications';
+import FlowVisual from 'components/FlowVisual';
 import Profile from './components/Profile';
 import { Briefcase, LayoutDashboard, Search, FileText, Bell, User, Info } from 'lucide-react';
 
