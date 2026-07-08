@@ -1,6 +1,6 @@
 {
-  "name": "blyfit",
-  "short_name": "fitness app",
+  "name": "job finding",
+  "short_name": "JOB app",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#0f172a",
