@@ -17,5 +17,20 @@ if ('serviceWorker' in navigator) {
       .register('/service-worker.js')
       .then(() => console.log('PWA Ready'))
       .catch((err) => console.log('"Install prompt is available!"'));
+    let deferredPrompt = null;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = "block";
+});
+
+installBtn.addEventListener("click", async () => {
+  if (!deferredPrompt) return;
+
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+});
   });
 }
