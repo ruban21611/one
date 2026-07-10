@@ -1,55 +1,16 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Job Portal</title>
-
-<link rel="manifest" href="/manifest.json">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#2563eb">
-  <link rel="apple-touch-icon" href="job-icon-192.png">
-</head>
-<body>
-  <div id="root"></div>
-
-  <script type="module" src="/src/main.tsx"></script>
-  <script type="module" src="/src/main.tsx"></script>
-  <script>
-let deferredPrompt;
-
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  document.getElementById("installOverlay").classList.add("show");
-});
-
-async function installApp() {
-  if (!deferredPrompt) return;
-
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-
-  if (outcome === "accepted") {
-    document.getElementById("installOverlay").classList.remove("show");
-  }
-
-  deferredPrompt = null;
-}
-
-window.addEventListener("appinstalled", () => {
-  document.getElementById("installOverlay").classList.remove("show");
-});
-</script>
-
-  <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker
-          .register("/service-worker.js")
-          .then(() => console.log("Service Worker registered"))
-          .catch(console.error);
-      });
-    }
-  </script>
-</body>
+<link rel="apple-touch-icon" href="/icon-192.png">
+    <title>JOB APPLICATION App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
+
