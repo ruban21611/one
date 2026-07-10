@@ -9,45 +9,7 @@
   <title>JOB APPLICATION App</title>
 
   <style>
-    #install-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-
-    .install-card {
-      background: #fff;
-      padding: 1.5rem;
-      border-radius: 12px;
-      max-width: 320px;
-      text-align: center;
-      font-family: sans-serif;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    }
-  </style>
-</head>
-<body>
-  <div id="install-overlay">
-    <div class="install-card">
-      <h2>Install This App</h2>
-     <div id="install-overlay">
-  <div class="install-card">
-    <h2>Install This App</h2>
-    <p>
-      Use your browser’s <strong>Install App</strong> or
-      <strong>Add to Home Screen</strong> option to install this PWA.
-      (The actual install prompt cannot be triggered without JavaScript.)
-    </p>
-
-    <div style="margin-top:1rem; display:flex; gap:0.75rem; justify-content:center;">
-     <button id="installBtn" type="button">Install</button>
-<button id="cancelBtn" type="button">Cancel</button>
-       <style>
-    .install-card {
+  .install-card {
   background: #fff;
   padding: 2rem;
   border-radius: 16px;
@@ -80,7 +42,26 @@
   background: #f3f4f6;
   color: #333;
 }
-  </style>
+</style>
+</head>
+<body>
+  <div id="install-overlay">
+    <div class="install-card">
+      
+      <h2>Install This App</h2>
+     <div id="install-overlay">
+  <div class="install-card">
+    <h2>Install This App</h2>
+    
+    <p>
+      Use your browser’s <strong>Install App</strong> or
+      <strong>Add to Home Screen</strong> option to install this PWA.
+      (The actual install prompt cannot be triggered without JavaScript.)
+    </p>
+
+    <div style="margin-top:1rem; display:flex; gap:0.75rem; justify-content:center;">
+     <button id="installBtn" type="button">Install</button>
+<button id="cancelBtn" type="button">Cancel</button>
     </div>
   </div>
 </div>
