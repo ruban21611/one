@@ -46,40 +46,7 @@
     <div style="margin-top:1rem; display:flex; gap:0.75rem; justify-content:center;">
      <button id="installBtn" type="button">Install</button>
 <button id="cancelBtn" type="button">Cancel</button>
-    </div>
-  </div>
-</div>
-    </div>
-  </div>
-
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-  <script>
-  let deferredPrompt = null;
-
-  window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault(); // Browser-oda default mini-infobar-a stop pannum
-    deferredPrompt = e;
-
-    // Inga unga overlay-a show pannunga
-    document.getElementById("install-overlay").style.display = "flex";
-  });
-
-  document.getElementById("installBtn").addEventListener("click", async () => {
-    if (!deferredPrompt) return;
-
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-
-    deferredPrompt = null;
-    document.getElementById("install-overlay").style.display = "none";
-  });
-
-  document.getElementById("cancelBtn").addEventListener("click", () => {
-    document.getElementById("install-overlay").style.display = "none";
-  });
-</script>
-  <style>
+       <style>
     .install-card {
   background: #fff;
   padding: 2rem;
@@ -114,6 +81,39 @@
   color: #333;
 }
   </style>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+  <script>
+  let deferredPrompt = null;
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault(); // Browser-oda default mini-infobar-a stop pannum
+    deferredPrompt = e;
+
+    // Inga unga overlay-a show pannunga
+    document.getElementById("install-overlay").style.display = "flex";
+  });
+
+  document.getElementById("installBtn").addEventListener("click", async () => {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+
+    deferredPrompt = null;
+    document.getElementById("install-overlay").style.display = "none";
+  });
+
+  document.getElementById("cancelBtn").addEventListener("click", () => {
+    document.getElementById("install-overlay").style.display = "none";
+  });
+</script>
     
 </body>
 </html>
