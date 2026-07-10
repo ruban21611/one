@@ -34,11 +34,28 @@
   <div id="install-overlay">
     <div class="install-card">
       <h2>Install This App</h2>
-      <p>
-        To install this PWA, use your browser’s “Install App” or
-        “Add to Home Screen” option. A custom install prompt cannot be
-        triggered using HTML alone.
-      </p>
+     <div id="install-overlay">
+  <div class="install-card">
+    <h2>Install This App</h2>
+    <p>
+      Use your browser’s <strong>Install App</strong> or
+      <strong>Add to Home Screen</strong> option to install this PWA.
+      (The actual install prompt cannot be triggered without JavaScript.)
+    </p>
+
+    <div style="margin-top:1rem; display:flex; gap:0.75rem; justify-content:center;">
+      <button type="button"
+              style="padding:0.6rem 1.2rem; border:none; border-radius:6px; background:#2563eb; color:#fff; cursor:pointer;">
+        Install
+      </button>
+
+      <button type="button"
+              style="padding:0.6rem 1.2rem; border:1px solid #ccc; border-radius:6px; background:#fff; color:#333; cursor:pointer;">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
     </div>
   </div>
 
