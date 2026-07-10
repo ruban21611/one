@@ -61,5 +61,30 @@
 
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
+  <script>
+  let deferredPrompt = null;
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault(); // Browser-oda default mini-infobar-a stop pannum
+    deferredPrompt = e;
+
+    // Inga unga overlay-a show pannunga
+    document.getElementById("install-overlay").style.display = "flex";
+  });
+
+  document.getElementById("installBtn").addEventListener("click", async () => {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+
+    deferredPrompt = null;
+    document.getElementById("install-overlay").style.display = "none";
+  });
+
+  document.getElementById("cancelBtn").addEventListener("click", () => {
+    document.getElementById("install-overlay").style.display = "none";
+  });
+</script>
 </body>
 </html>
