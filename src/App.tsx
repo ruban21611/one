@@ -5,8 +5,8 @@ import ExploreJobs from './components/ExploreJobs';
 import JobInformation from './components/JobInformation';
 import Requesting from './components/Requesting';
 import Notifications from './components/Notifications';
-import FlowVisualizer from './components/FlowVisualizer';
 import Profile from './components/Profile';
+import FlowVisualizer from './components/FlowVisualizer';
 import { Briefcase, LayoutDashboard, Search, FileText, Bell, User, Info } from 'lucide-react';
 
 export default function App() {
