@@ -1,16 +1,48 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#2563eb">
-<link rel="apple-touch-icon" href="/icon-192.png">
-    <title>JOB APPLICATION App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <title>JOB APPLICATION App</title>
 
+  <style>
+    #install-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .install-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      max-width: 320px;
+      text-align: center;
+      font-family: sans-serif;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div id="install-overlay">
+    <div class="install-card">
+      <h2>Install This App</h2>
+      <p>
+        To install this PWA, use your browser’s “Install App” or
+        “Add to Home Screen” option. A custom install prompt cannot be
+        triggered using HTML alone.
+      </p>
+    </div>
+  </div>
+
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>
