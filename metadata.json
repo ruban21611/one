@@ -1,5 +1,5 @@
 {
-  "name": "Job Application Assistant",
+  "name": "Job Application ",
   "description": "Full-stack job application app featuring a real-time system flow visualizer, Adzuna API job explore, and Gemini AI-powered resume and cover letter optimization.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
