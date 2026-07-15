@@ -11,8 +11,10 @@
   <style>
  #install-overlay 
     {
-      position: fixed; inset: 0; 
-    background: rgba(0,0,0,0.6); display: flex; 
+      display: none; 
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
       align-items: center;
       justify-content: center; 
       z-index: 9999;
@@ -27,8 +29,8 @@
 <body>
   <div id="install-overlay">
     <div class="install-card">
+       <h2>Install This App</h2>
       
-      <h2>Install This App</h2>
      <div id="install-overlay">
   <div class="install-card">
     <h2>Install This App</h2>
@@ -39,9 +41,9 @@
      
     </p>
 
-    <div style="margin-top:1rem; display:flex; gap:0.75rem; justify-content:center;">
-     <button id="installBtn" type="button">Install</button>
-<button id="cancelBtn" type="button">Cancel</button>
+    <div style="margin-top:1rem; display:flex; gap:10px; justify-content:center;">
+     <button id="installBtn">Install</button>
+     <button id="cancelBtn">Cancel</button>
     </div>
   </div>
 </div>
@@ -51,30 +53,61 @@
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
   <script>
-  let deferredPrompt = null;
+let deferredPrompt = null;
 
-  window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault(); // Browser-oda default mini-infobar-a stop pannum
-    deferredPrompt = e;
+const overlay = document.getElementById("install-overlay");
+const installBtn = document.getElementById("installBtn");
+const cancelBtn = document.getElementById("cancelBtn");
 
-    // Inga unga overlay-a show pannunga
-    document.getElementById("install-overlay").style.display = "flex";
-  });
+// Already installed check
+const isInstalled =
+  window.matchMedia("(display-mode: standalone)").matches ||
+  window.navigator.standalone === true ||
+  localStorage.getItem("appInstalled") === "true";
 
-  document.getElementById("installBtn").addEventListener("click", async () => {
-    if (!deferredPrompt) return;
+if (isInstalled) {
+  overlay.style.display = "none";
+}
 
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
+// Install prompt event
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
 
-    deferredPrompt = null;
-    document.getElementById("install-overlay").style.display = "none";
-  });
+  if (localStorage.getItem("appInstalled") === "true") return;
 
-  document.getElementById("cancelBtn").addEventListener("click", () => {
-    document.getElementById("install-overlay").style.display = "none";
-  });
+  deferredPrompt = e;
+  overlay.style.display = "flex";
+});
+
+// Install button
+installBtn.addEventListener("click", async () => {
+  if (!deferredPrompt) return;
+
+  deferredPrompt.prompt();
+
+  const choice = await deferredPrompt.userChoice;
+
+  if (choice.outcome === "accepted") {
+    localStorage.setItem("appInstalled", "true");
+  }
+
+  deferredPrompt = null;
+  overlay.style.display = "none";
+});
+
+// Installed successfully
+window.addEventListener("appinstalled", () => {
+  localStorage.setItem("appInstalled", "true");
+  deferredPrompt = null;
+  overlay.style.display = "none";
+});
+
+// Cancel button
+cancelBtn.addEventListener("click", () => {
+  overlay.style.display = "none";
+});
 </script>
+
     
 </body>
 </html>
