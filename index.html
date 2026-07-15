@@ -1,322 +1,80 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- PWA -->
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#2563eb">
-<link rel="apple-touch-icon" href="/icon-192.png">
-
-<title>Job Application App</title>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-background:#f5f7fb;
-}
-}
-/* React Root */
-#root{
-min-height:100vh;
-}
-
-/* ========================= */
-/* INSTALL POPUP */
-/* ========================= */
-
-#installOverlay{
-position:fixed;
-left:0;
-right:0;
-top:0;
-bottom:0;
-
-display:none;
-
-justify-content:center;
-align-items:flex-end;
-
-background:rgba(0,0,0,.6);
-
-z-index:9999;
-}
-
-.installBox{
-
-width:100%;
-max-width:420px;
-
-background:#fff;
-
-border-radius:25px 25px 0 0;
-
-padding:30px;
-
-text-align:center;
-
-animation:slideUp .35s ease;
-
-}
-
-@keyframes slideUp{
-
-from{
-transform:translateY(100%);
-opacity:0;
-}
-
-to{
-transform:translateY(0);
-opacity:1;
-}
-
-}
-
-.logo{
-
-width:90px;
-height:90px;
-
-margin:auto;
-
-background:#2563eb;
-
-border-radius:50%;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:45px;
-
-color:white;
-
-box-shadow:0 8px 25px rgba(37,99,235,.3);
-
-margin-bottom:20px;
-
-}
-
-.installBox h2{
-
-font-size:28px;
-color:#222;
-margin-bottom:10px;
-
-}
-
-.installBox p{
-
-color:#666;
-line-height:1.7;
-margin-bottom:25px;
-
-}
-
-.features{
-
-display:flex;
-justify-content:space-around;
-margin-bottom:25px;
-
-}
-
-.feature{
-
-font-size:14px;
-color:#555;
-
-}
-
-.buttons{
-
-display:flex;
-gap:12px;
-
-}
-
-.buttons button{
-
-flex:1;
-
-padding:14px;
-
-font-size:16px;
-
-border:none;
-
-border-radius:10px;
-
-cursor:pointer;
-
-transition:.3s;
-
-}
-
-#cancelBtn{
-
-background:#ececec;
-
-}
-
-#cancelBtn:hover{
-
-background:#dcdcdc;
-
-}
-
-#installBtn{
-
-background:#2563eb;
-color:white;
-
-}
-
-#installBtn:hover{
-
-background:#1d4ed8;
-
-}
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <title>JOB APPLICATION App</title>
+
+  <style>
+ #install-overlay 
+    {
+      position: fixed; inset: 0; 
+    background: rgba(0,0,0,0.6); display: flex; 
+      align-items: center;
+      justify-content: center; 
+      z-index: 9999;
+    } 
+    .install-card { background: #fff; padding: 1.5rem; 
+                   border-radius: 12px; max-width: 320px; 
+                   text-align: center; font-family: sans-serif; 
+                   box-shadow: 0 8px 24px rgba(0,0,0,0.2); 
+                  }
 </style>
-
 </head>
-
 <body>
-  <!-- Install Popup -->
-<div id="installOverlay">
-  <div class="installBox">
-
-    <div class="logo">💼</div>
-
-    <h2>Install Job Application</h2>
-
+  <div id="install-overlay">
+    <div class="install-card">
+      
+      <h2>Install This App</h2>
+     <div id="install-overlay">
+  <div class="install-card">
+    <h2>Install This App</h2>
+    
     <p>
-      Install this app for faster access, offline support and notifications.
+      Use your browser’s <strong>Install App</strong> or
+      <strong>Add to Home Screen</strong> option to install this PWA.
+     
     </p>
 
-    <div class="buttons">
-      <button id="cancelBtn">Later</button>
-      <button id="installBtn">Install</button>
+    <div style="margin-top:1rem; display:flex; gap:0.75rem; justify-content:center;">
+     <button id="installBtn" type="button">Install</button>
+<button id="cancelBtn" type="button">Cancel</button>
     </div>
-
   </div>
 </div>
+    </div>
+  </div>
 
-<style>
-#installOverlay{
-position:fixed;
-inset:0;
-display:none;
-justify-content:center;
-align-items:flex-end;
-background:rgba(0,0,0,.55);
-z-index:999999;
-}
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+  <script>
+  let deferredPrompt = null;
 
-#installOverlay .installBox{
-width:100%;
-max-width:420px;
-background:#fff;
-padding:30px;
-border-radius:25px 25px 0 0;
-text-align:center;
-animation:popup .35s ease;
-font-family:Arial,Helvetica,sans-serif;
-}
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault(); // Browser-oda default mini-infobar-a stop pannum
+    deferredPrompt = e;
 
-@keyframes popup{
-from{
-transform:translateY(100%);
-}
-to{
-transform:translateY(0);
-}
-}
+    // Inga unga overlay-a show pannunga
+    document.getElementById("install-overlay").style.display = "flex";
+  });
 
-#installOverlay .logo{
-width:80px;
-height:80px;
-margin:auto;
-background:#2563eb;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:40px;
-color:#fff;
-margin-bottom:20px;
-}
+  document.getElementById("installBtn").addEventListener("click", async () => {
+    if (!deferredPrompt) return;
 
-#installOverlay h2{
-margin-bottom:10px;
-font-size:28px;
-}
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
 
-#installOverlay p{
-color:#666;
-margin-bottom:20px;
-line-height:1.6;
-}
+    deferredPrompt = null;
+    document.getElementById("install-overlay").style.display = "none";
+  });
 
-#installOverlay .buttons{
-display:flex;
-gap:10px;
-}
-
-#installOverlay button{
-flex:1;
-padding:14px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-font-size:16px;
-}
-
-#installBtn{
-background:#2563eb;
-color:#fff;
-}
-
-#cancelBtn{
-background:#e5e5e5;
-}
-</style>
-
-<script>
-let deferredPrompt;
-
-const overlay=document.getElementById("installOverlay");
-
-window.addEventListener("beforeinstallprompt",(e)=>{
-e.preventDefault();
-deferredPrompt=e;
-overlay.style.display="flex";
-});
-
-document.getElementById("installBtn").onclick=async()=>{
-if(!deferredPrompt)return;
-deferredPrompt.prompt();
-await deferredPrompt.userChoice;
-overlay.style.display="none";
-};
-
-document.getElementById("cancelBtn").onclick=()=>{
-overlay.style.display="none";
-};
-
-window.addEventListener("appinstalled",()=>{
-overlay.style.display="none";
-});
+  document.getElementById("cancelBtn").addEventListener("click", () => {
+    document.getElementById("install-overlay").style.display = "none";
+  });
 </script>
+    
+</body>
 </html>
