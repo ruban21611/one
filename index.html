@@ -193,138 +193,130 @@ background:#1d4ed8;
 </head>
 
 <body>
-
-<!-- INSTALL POPUP -->
-
+  <!-- Install Popup -->
 <div id="installOverlay">
+  <div class="installBox">
 
-<div class="installBox">
+    <div class="logo">💼</div>
 
-<div class="logo">
-💼
+    <h2>Install Job Application</h2>
+
+    <p>
+      Install this app for faster access, offline support and notifications.
+    </p>
+
+    <div class="buttons">
+      <button id="cancelBtn">Later</button>
+      <button id="installBtn">Install</button>
+    </div>
+
+  </div>
 </div>
 
-<h2>Install Job App</h2>
+<style>
+#installOverlay{
+position:fixed;
+inset:0;
+display:none;
+justify-content:center;
+align-items:flex-end;
+background:rgba(0,0,0,.55);
+z-index:999999;
+}
 
-<p>
-Install this Job Application App for a faster,
-better and offline experience.
-</p>
+#installOverlay .installBox{
+width:100%;
+max-width:420px;
+background:#fff;
+padding:30px;
+border-radius:25px 25px 0 0;
+text-align:center;
+animation:popup .35s ease;
+font-family:Arial,Helvetica,sans-serif;
+}
 
-<div class="features">
+@keyframes popup{
+from{
+transform:translateY(100%);
+}
+to{
+transform:translateY(0);
+}
+}
 
-<div class="feature">
-⚡ Fast
-</div>
+#installOverlay .logo{
+width:80px;
+height:80px;
+margin:auto;
+background:#2563eb;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+color:#fff;
+margin-bottom:20px;
+}
 
-<div class="feature">
-📶 Offline
-</div>
+#installOverlay h2{
+margin-bottom:10px;
+font-size:28px;
+}
 
-<div class="feature">
-🔔 Notifications
-</div>
+#installOverlay p{
+color:#666;
+margin-bottom:20px;
+line-height:1.6;
+}
 
-</div>
+#installOverlay .buttons{
+display:flex;
+gap:10px;
+}
 
-<div class="buttons">
+#installOverlay button{
+flex:1;
+padding:14px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-size:16px;
+}
 
-<button id="cancelBtn">
-Later
-</button>
+#installBtn{
+background:#2563eb;
+color:#fff;
+}
 
-<button id="installBtn">
-Install
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- React App -->
-
-<div id="root"></div>
-
-<script type="module" src="/src/main.tsx"></script>
+#cancelBtn{
+background:#e5e5e5;
+}
+</style>
 
 <script>
-
 let deferredPrompt;
 
 const overlay=document.getElementById("installOverlay");
-const installBtn=document.getElementById("installBtn");
-const cancelBtn=document.getElementById("cancelBtn");
-
-function appInstalled(){
-
-return window.matchMedia("(display-mode: standalone)").matches
-|| localStorage.getItem("jobAppInstalled")=="true";
-
-}
 
 window.addEventListener("beforeinstallprompt",(e)=>{
-
 e.preventDefault();
-
-if(appInstalled()) return;
-
 deferredPrompt=e;
-
 overlay.style.display="flex";
-
 });
 
-installBtn.addEventListener("click",async()=>{
-
-if(!deferredPrompt) return;
-
+document.getElementById("installBtn").onclick=async()=>{
+if(!deferredPrompt)return;
 deferredPrompt.prompt();
-
-const result=await deferredPrompt.userChoice;
-
-if(result.outcome==="accepted"){
-
-localStorage.setItem("jobAppInstalled","true");
-
-}
-
+await deferredPrompt.userChoice;
 overlay.style.display="none";
+};
 
-deferredPrompt=null;
-
-});
-
-cancelBtn.addEventListener("click",()=>{
-
+document.getElementById("cancelBtn").onclick=()=>{
 overlay.style.display="none";
-
-});
+};
 
 window.addEventListener("appinstalled",()=>{
-
-localStorage.setItem("jobAppInstalled","true");
-
 overlay.style.display="none";
-
-deferredPrompt=null;
-
-console.log("App Installed");
-
 });
-
-window.addEventListener("load",()=>{
-
-if(appInstalled()){
-
-overlay.style.display="none";
-
-}
-
-});
-
 </script>
-
-</body>
 </html>
