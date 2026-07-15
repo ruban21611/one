@@ -1,207 +1,330 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- PWA -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#2563eb">
-  <link rel="apple-touch-icon" href="/icon-192.png">
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<link rel="apple-touch-icon" href="/icon-192.png">
 
-  <title>JOB APPLICATION APP</title>
+<title>Job Application App</title>
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
+<style>
 
-    body{
-      font-family:Arial, Helvetica, sans-serif;
-      background:#f5f5f5;
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
 
-    /* Install Popup */
-    #install-overlay{
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.65);
-      justify-content:center;
-      align-items:center;
-      z-index:9999;
-    }
+body{
+background:#f5f7fb;
+}
 
-    .install-card{
-      width:330px;
-      background:#fff;
-      border-radius:15px;
-      padding:25px;
-      text-align:center;
-      box-shadow:0 10px 30px rgba(0,0,0,.3);
-      animation:popup .3s ease;
-    }
+/* React Root */
+#root{
+min-height:100vh;
+}
 
-    @keyframes popup{
-      from{
-        transform:scale(.8);
-        opacity:0;
-      }
-      to{
-        transform:scale(1);
-        opacity:1;
-      }
-    }
+/* ========================= */
+/* INSTALL POPUP */
+/* ========================= */
 
-    .install-card h2{
-      margin-bottom:10px;
-      color:#2563eb;
-    }
+#installOverlay{
+position:fixed;
+left:0;
+right:0;
+top:0;
+bottom:0;
 
-    .install-card p{
-      color:#555;
-      margin-bottom:20px;
-      line-height:1.5;
-    }
+display:none;
 
-    .buttons{
-      display:flex;
-      justify-content:center;
-      gap:10px;
-    }
+justify-content:center;
+align-items:flex-end;
 
-    button{
-      padding:10px 18px;
-      border:none;
-      border-radius:8px;
-      cursor:pointer;
-      font-size:15px;
-    }
+background:rgba(0,0,0,.6);
 
-    #installBtn{
-      background:#2563eb;
-      color:#fff;
-    }
+z-index:9999;
+}
 
-    #cancelBtn{
-      background:#ddd;
-    }
+.installBox{
 
-    #root{
-      min-height:100vh;
-    }
-  </style>
+width:100%;
+max-width:420px;
+
+background:#fff;
+
+border-radius:25px 25px 0 0;
+
+padding:30px;
+
+text-align:center;
+
+animation:slideUp .35s ease;
+
+}
+
+@keyframes slideUp{
+
+from{
+transform:translateY(100%);
+opacity:0;
+}
+
+to{
+transform:translateY(0);
+opacity:1;
+}
+
+}
+
+.logo{
+
+width:90px;
+height:90px;
+
+margin:auto;
+
+background:#2563eb;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:45px;
+
+color:white;
+
+box-shadow:0 8px 25px rgba(37,99,235,.3);
+
+margin-bottom:20px;
+
+}
+
+.installBox h2{
+
+font-size:28px;
+color:#222;
+margin-bottom:10px;
+
+}
+
+.installBox p{
+
+color:#666;
+line-height:1.7;
+margin-bottom:25px;
+
+}
+
+.features{
+
+display:flex;
+justify-content:space-around;
+margin-bottom:25px;
+
+}
+
+.feature{
+
+font-size:14px;
+color:#555;
+
+}
+
+.buttons{
+
+display:flex;
+gap:12px;
+
+}
+
+.buttons button{
+
+flex:1;
+
+padding:14px;
+
+font-size:16px;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+#cancelBtn{
+
+background:#ececec;
+
+}
+
+#cancelBtn:hover{
+
+background:#dcdcdc;
+
+}
+
+#installBtn{
+
+background:#2563eb;
+color:white;
+
+}
+
+#installBtn:hover{
+
+background:#1d4ed8;
+
+}
+
+</style>
+
 </head>
 
 <body>
 
-<!-- Install Popup -->
-<div id="install-overlay">
-  <div class="install-card">
+<!-- INSTALL POPUP -->
 
-    <h2>📱 Install App</h2>
+<div id="installOverlay">
 
-    <p>
-      Install this Job Application App for a better experience.
-    </p>
+<div class="installBox">
 
-    <div class="buttons">
-      <button id="installBtn">Install</button>
-      <button id="cancelBtn">Cancel</button>
-    </div>
-
-  </div>
+<div class="logo">
+💼
 </div>
 
-<!-- React Root -->
+<h2>Install Job App</h2>
+
+<p>
+Install this Job Application App for a faster,
+better and offline experience.
+</p>
+
+<div class="features">
+
+<div class="feature">
+⚡ Fast
+</div>
+
+<div class="feature">
+📶 Offline
+</div>
+
+<div class="feature">
+🔔 Notifications
+</div>
+
+</div>
+
+<div class="buttons">
+
+<button id="cancelBtn">
+Later
+</button>
+
+<button id="installBtn">
+Install
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- React App -->
+
 <div id="root"></div>
 
-<!-- React -->
 <script type="module" src="/src/main.tsx"></script>
 
-<!-- Install Script -->
 <script>
-let deferredPrompt = null;
 
-const overlay = document.getElementById("install-overlay");
-const installBtn = document.getElementById("installBtn");
-const cancelBtn = document.getElementById("cancelBtn");
+let deferredPrompt;
 
-/* Check if already installed */
-function isAppInstalled() {
-  return (
-    window.matchMedia("(display-mode: standalone)").matches ||
-    window.navigator.standalone === true ||
-    localStorage.getItem("appInstalled") === "true"
-  );
+const overlay=document.getElementById("installOverlay");
+const installBtn=document.getElementById("installBtn");
+const cancelBtn=document.getElementById("cancelBtn");
+
+function appInstalled(){
+
+return window.matchMedia("(display-mode: standalone)").matches
+|| localStorage.getItem("jobAppInstalled")=="true";
+
 }
 
-/* Hide popup if already installed */
-if (isAppInstalled()) {
-  overlay.style.display = "none";
+window.addEventListener("beforeinstallprompt",(e)=>{
+
+e.preventDefault();
+
+if(appInstalled()) return;
+
+deferredPrompt=e;
+
+overlay.style.display="flex";
+
+});
+
+installBtn.addEventListener("click",async()=>{
+
+if(!deferredPrompt) return;
+
+deferredPrompt.prompt();
+
+const result=await deferredPrompt.userChoice;
+
+if(result.outcome==="accepted"){
+
+localStorage.setItem("jobAppInstalled","true");
+
 }
 
-/* Browser install event */
-window.addEventListener("beforeinstallprompt", (e) => {
+overlay.style.display="none";
 
-  e.preventDefault();
-
-  if (isAppInstalled()) return;
-
-  deferredPrompt = e;
-
-  overlay.style.display = "flex";
+deferredPrompt=null;
 
 });
 
-/* Install button */
-installBtn.addEventListener("click", async () => {
+cancelBtn.addEventListener("click",()=>{
 
-  if (!deferredPrompt) return;
-
-  deferredPrompt.prompt();
-
-  const result = await deferredPrompt.userChoice;
-
-  if (result.outcome === "accepted") {
-    localStorage.setItem("appInstalled", "true");
-  }
-
-  overlay.style.display = "none";
-  deferredPrompt = null;
+overlay.style.display="none";
 
 });
 
-/* App Installed */
-window.addEventListener("appinstalled", () => {
+window.addEventListener("appinstalled",()=>{
 
-  localStorage.setItem("appInstalled", "true");
+localStorage.setItem("jobAppInstalled","true");
 
-  overlay.style.display = "none";
+overlay.style.display="none";
 
-  deferredPrompt = null;
+deferredPrompt=null;
 
-  console.log("App Installed Successfully");
-
-});
-
-/* Cancel */
-cancelBtn.addEventListener("click", () => {
-
-  overlay.style.display = "none";
+console.log("App Installed");
 
 });
 
-/* If app is opened after installation */
-window.addEventListener("load", () => {
+window.addEventListener("load",()=>{
 
-  if (isAppInstalled()) {
-    overlay.style.display = "none";
-  }
+if(appInstalled()){
+
+overlay.style.display="none";
+
+}
 
 });
+
 </script>
 
 </body>
