@@ -3,111 +3,206 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- PWA -->
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#2563eb">
   <link rel="apple-touch-icon" href="/icon-192.png">
-  <title>JOB APPLICATION App</title>
+
+  <title>JOB APPLICATION APP</title>
 
   <style>
- #install-overlay 
-    {
-      display: none; 
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      align-items: center;
-      justify-content: center; 
-      z-index: 9999;
-    } 
-    .install-card { background: #fff; padding: 1.5rem; 
-                   border-radius: 12px; max-width: 320px; 
-                   text-align: center; font-family: sans-serif; 
-                   box-shadow: 0 8px 24px rgba(0,0,0,0.2); 
-                  }
-</style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      background:#f5f5f5;
+    }
+
+    /* Install Popup */
+    #install-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.65);
+      justify-content:center;
+      align-items:center;
+      z-index:9999;
+    }
+
+    .install-card{
+      width:330px;
+      background:#fff;
+      border-radius:15px;
+      padding:25px;
+      text-align:center;
+      box-shadow:0 10px 30px rgba(0,0,0,.3);
+      animation:popup .3s ease;
+    }
+
+    @keyframes popup{
+      from{
+        transform:scale(.8);
+        opacity:0;
+      }
+      to{
+        transform:scale(1);
+        opacity:1;
+      }
+    }
+
+    .install-card h2{
+      margin-bottom:10px;
+      color:#2563eb;
+    }
+
+    .install-card p{
+      color:#555;
+      margin-bottom:20px;
+      line-height:1.5;
+    }
+
+    .buttons{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+    }
+
+    button{
+      padding:10px 18px;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:15px;
+    }
+
+    #installBtn{
+      background:#2563eb;
+      color:#fff;
+    }
+
+    #cancelBtn{
+      background:#ddd;
+    }
+
+    #root{
+      min-height:100vh;
+    }
+  </style>
 </head>
+
 <body>
-  <div id="install-overlay">
-    <div class="install-card">
-       <h2>Install This App</h2>
-      
-     <div id="install-overlay">
+
+<!-- Install Popup -->
+<div id="install-overlay">
   <div class="install-card">
-    <h2>Install This App</h2>
-    
+
+    <h2>📱 Install App</h2>
+
     <p>
-      Use your browser’s <strong>Install App</strong> or
-      <strong>Add to Home Screen</strong> option to install this PWA.
-     
+      Install this Job Application App for a better experience.
     </p>
 
-    <div style="margin-top:1rem; display:flex; gap:10px; justify-content:center;">
-     <button id="installBtn">Install</button>
-     <button id="cancelBtn">Cancel</button>
+    <div class="buttons">
+      <button id="installBtn">Install</button>
+      <button id="cancelBtn">Cancel</button>
     </div>
+
   </div>
 </div>
-    </div>
-  </div>
 
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-  <script>
+<!-- React Root -->
+<div id="root"></div>
+
+<!-- React -->
+<script type="module" src="/src/main.tsx"></script>
+
+<!-- Install Script -->
+<script>
 let deferredPrompt = null;
 
 const overlay = document.getElementById("install-overlay");
 const installBtn = document.getElementById("installBtn");
 const cancelBtn = document.getElementById("cancelBtn");
 
-// Already installed check
-const isInstalled =
-  window.matchMedia("(display-mode: standalone)").matches ||
-  window.navigator.standalone === true ||
-  localStorage.getItem("appInstalled") === "true";
+/* Check if already installed */
+function isAppInstalled() {
+  return (
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true ||
+    localStorage.getItem("appInstalled") === "true"
+  );
+}
 
-if (isInstalled) {
+/* Hide popup if already installed */
+if (isAppInstalled()) {
   overlay.style.display = "none";
 }
 
-// Install prompt event
+/* Browser install event */
 window.addEventListener("beforeinstallprompt", (e) => {
+
   e.preventDefault();
 
-  if (localStorage.getItem("appInstalled") === "true") return;
+  if (isAppInstalled()) return;
 
   deferredPrompt = e;
+
   overlay.style.display = "flex";
+
 });
 
-// Install button
+/* Install button */
 installBtn.addEventListener("click", async () => {
+
   if (!deferredPrompt) return;
 
   deferredPrompt.prompt();
 
-  const choice = await deferredPrompt.userChoice;
+  const result = await deferredPrompt.userChoice;
 
-  if (choice.outcome === "accepted") {
+  if (result.outcome === "accepted") {
     localStorage.setItem("appInstalled", "true");
   }
 
-  deferredPrompt = null;
   overlay.style.display = "none";
+  deferredPrompt = null;
+
 });
 
-// Installed successfully
+/* App Installed */
 window.addEventListener("appinstalled", () => {
+
   localStorage.setItem("appInstalled", "true");
-  deferredPrompt = null;
+
   overlay.style.display = "none";
+
+  deferredPrompt = null;
+
+  console.log("App Installed Successfully");
+
 });
 
-// Cancel button
+/* Cancel */
 cancelBtn.addEventListener("click", () => {
+
   overlay.style.display = "none";
+
+});
+
+/* If app is opened after installation */
+window.addEventListener("load", () => {
+
+  if (isAppInstalled()) {
+    overlay.style.display = "none";
+  }
+
 });
 </script>
 
-    
 </body>
 </html>
